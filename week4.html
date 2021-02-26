@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Midland Sports RSS Feed</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+
+<body>
+    
+
+    <div class="container">
+
+        <div id='feed' class="row d-flex justify-content-center">
+        </div>
+
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <script>
+        var article = document.getElementById('feed');
+        var url = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.midlandathletics.com%2Frss.php";
+        var html = '';
+        
+        fetch(url).then(function(fetchRes) {
+            console.log('Result of fetch request>>>', fetchRes);
+            return fetchRes.json();
+        }).then(function(articleData){
+            articleData.items.forEach(function(item){
+                html += `<div class="col-lg-2 col-md-4 col-sm-6 my-5 d-flex flex-column justify-content-between">
+                            <h1>${item.title}</h1>
+                            <img class="img-responsive col-12" src="${item.thumbnail}" />
+                            
+                            <p>${item.description.substring(0, 300)}(cont.</p>
+                        </div>`;  
+            })
+            article.innerHTML = html;
+        });
+
+    </script>
+
+</body>
+</html>
